@@ -1,79 +1,66 @@
-//未解决,WA
+//解决，DFS，注意回溯和剪枝
 //http://acm.hdu.edu.cn/showproblem.php?pid=1010
 #include<cstdio>
 #include<cstring>
 
-const int N = 8;
-char maze[N][N];
-int mark[N][N];
-int n,m,t;
-int sx,sy; //终点
-bool flag; //是否到达终点
-
-int move[][2]={
+const int N = 10;
+int vis[N][N];
+char mp[N][N];
+int sx,sy; //起点
+int ex,ey; //终点
+int n,m,T; //n行m列时长T
+int move[][2] = {
     -1,0,
     1,0,
-    0,1,
-    0,-1
+    0,-1,
+    0,1
 };
 
-void DFS(int x,int y,int time){
-    for(int i = 0; i < 4; i++){
+int DFS(int x,int y,int t){
+    if(x == ex && y == ey && t == T)
+        return 1;
+    for(int i = 0; i<4; i++){
         int nx = x + move[i][0];
-        int ny = y + move[i][1];
-        if(nx < 1 || nx > n || ny < 1 || ny > m) continue;
-        if(maze[nx][ny] == 'X' || mark[nx][ny] == 1) continue;
-        mark[nx][ny] = 1;
-        if(nx == sx && ny == sy ) {
-            if(time + 1 == t){
-                flag = true;
-                return;
-            }
-            else continue;
-        }    
-        DFS(nx,ny,time+1);
-        mark[nx][ny] = 0;
-        if(flag) return;
-    }
+        int ny = y + move[i][1];  //别TM写错了
+        if(nx >= 0 && ny >= 0 && nx < n&& ny < m && !vis[nx][ny] && mp[nx][ny]!='X'){
+            vis[nx][ny] = 1;
+            if(DFS(nx, ny , t+1))
+                return 1;
+            vis[nx][ny] = 0;
+        }
+    }  
+    return 0;
 }
 
 int main(){
-    while(scanf("%d %d %d",&n,&m,&t) != EOF){
-        if(n==0 && m==0 && t==0) break;
-        for(int i = 1; i <= n;i++){
-            scanf("%s",maze[i]+1);
+    while (scanf("%d %d %d",&n,&m,&T) != EOF){
+        if(n == 0 && m==0 && T==0) break;
+        memset(vis,0,sizeof(vis));
+        for(int i = 0; i < n; i++){
+            scanf("%s",mp[i]);
         }
-        //初始化
-        memset(mark,0,sizeof(mark));
-        flag = false;
-
-        //找终点
-        for(int i = 1;i <= n;i++){
-            for(int j = 1;j <= m; j++){
-                if(maze[i][j] == 'D'){
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(mp[i][j] == 'D'){
+                    ex = i;
+                    ey = j;
+                }
+                if(mp[i][j] == 'S'){
                     sx = i;
                     sy = j;
-                    break;
+                    vis[sx][sy] = 1;
                 }
             }
         }
-        //找起点
-        for(int i = 1;i <= n;i++){
-            for(int j = 1;j <= m; j++){
-                if(maze[i][j] == 'S'){
-                    //奇偶性是否满足
-                    if((i+j)%2 ==(sx+sy+t)%2){
-                        mark[i][j] = 1;
-                        DFS(i,j,0);
-                    }
-                    break;
-                }
-            }
-        }
-        if(flag==1)
-            printf("YES\n");
-        else
+        if( (ex + ey) % 2 != (sx + sy + T) %2){
             printf("NO\n");
+        }else{
+            if(DFS(sx, sy, 0)){
+                printf("YES\n");
+            }else{
+                printf("NO\n");
+            }
+        }
     }
     return 0;
 }
