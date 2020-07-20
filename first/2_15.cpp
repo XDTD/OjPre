@@ -1,5 +1,5 @@
 //贪心算法，今年暑假不AC
-//http://acm.hdu.edu.cn/status.php
+//http://acm.hdu.edu.cn/showproblem.php?pid=2037
 
 #include<iostream>
 #include<algorithm>
