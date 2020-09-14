@@ -23,7 +23,7 @@ Bitnode* insertTree(Bitnode *T,int x){
         T=new Bitnode(x);
         return T;
     }else if(x<T->val){
-        T->l=insertTree(T->l,x);
+        T->l=insertTree(T->l,x);  //必须有个赋值
     }else if(x>T->val){
         T->r=insertTree(T->r,x);
     }
@@ -54,7 +54,7 @@ int main(){
         for(int i=0;i<n+1;i++){   //n+1不是n
             string tmp;
             cin>>tmp;
-            Bitnode* T=NULL;
+            Bitnode* T=NULL;   //初始化！！
             for(int j=0;j<tmp.size();j++){
                 T=insertTree(T,tmp[j]-'0');
             }
