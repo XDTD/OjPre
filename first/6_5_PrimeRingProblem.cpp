@@ -1,4 +1,5 @@
 //枚举回溯，递归实现，Prime Ring Problem
+//http://acm.hdu.edu.cn/showproblem.php?pid=1016
 //Presentation Error，注意输出格式！！
 #include<cstdio>
 #include<cstring>
