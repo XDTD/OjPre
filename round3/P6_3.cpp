@@ -1,3 +1,4 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=1495
 #include<cstdio>
 #include<cstring>
 #include<queue>
@@ -76,6 +77,7 @@ int main(){
     int a, b, c;
     while(scanf("%d %d %d", &a, &b, &c) != EOF){
         if(a == 0 && b == 0 && c == 0) break;
+        memset(vis, 0, sizeof(vis)); //!!!
         int ans = BFS(a, b, c);
         if(ans == -1)
             printf("NO\n");
