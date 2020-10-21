@@ -1,5 +1,6 @@
 //important
-//
+//http://acm.hdu.edu.cn/showproblem.php?pid=1241
+
 #include<cstdio>
 #include<cstring>
 
@@ -7,15 +8,15 @@ const int N = 101;
 int mark[N][N];
 int isOill[N][N];
 int n, m;
-int moves[][2]={  //注意相邻的定义
-    -1,0,
-    1,0,
-    0,1,
-    0,-1,
-    1,1,
-    1,-1,
-    -1,-1,
-    -1,1
+int moves[8][2]={
+    1, 0,
+    1, -1,
+    1, 1,
+    0, -1,
+    0, 1,
+    -1, -1,
+    -1, 0,
+    -1, 1
 };
 
 void DFS(int x, int y){
@@ -34,7 +35,8 @@ void DFS(int x, int y){
 int main(){
     while(scanf("%d %d", &n, &m) != EOF){
         if(n == 0 && m == 0) break;
-        memset(mark, 0, sizeof(0));
+        memset(mark, 0, sizeof(mark));
+        memset(isOill, 0, sizeof(isOill));
         for(int i = 1; i <= n; i++){
             char s[N];
             scanf("%s", s);    
